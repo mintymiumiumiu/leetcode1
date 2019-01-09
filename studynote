@@ -1,0 +1,37 @@
+Add Two Numbers:
+  this problem is medium rank and i dont know what is LinkNode, so i just see as l1, l2 as a normal list type.
+but there is already a class that defines a LinkNode:
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+that means this ListNode type cannot iterable, not a normal list. 
+then i find a solution with python3:
+  def my_generator(linked_list):
+    generator_list = linked_list
+    while generator_list:
+        yield generator_list.val
+        generator_list = generator_list.next
+with using this generator function, transfer the LinkNode to a list, then the problem solved.(kind amazing for who dont know much..)
+my answer:
+  class Solution:
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        ls1=[str(i) for i in my_generator(l1)]
+        ls2=[str(i) for i in my_generator(l2)]
+        ls3=''.join(ls1[::-1])
+        ls4=''.join(ls2[::-1])
+        l3 = list(map(int,str(int(ls3)+int(ls4))))
+        return l3[::-1]
+    
+
+def my_generator(linked_list):
+    generator_list = linked_list
+    while generator_list:
+        yield generator_list.val
+        generator_list = generator_list.next
