@@ -35,3 +35,42 @@ def my_generator(linked_list):
     while generator_list:
         yield generator_list.val
         generator_list = generator_list.next
+
+
+
+3. Longest Substring Without Repeating Characters
+  hit a issue that runcode is successfully finish and got an expect output, but when submission, always 'list index out of range' error,
+  and i searched this issue then almost answer is that global or static variable used.
+  not sure how to resolve this, but mark down my answer first:
+  def LongestSubstring(self,s):
+    l1=[]
+    str1=""
+    for i in range(len(s)):
+      if s[i] in str1:
+        l1.append(str1)
+        str1=""
+      str1 = str1 + s[i]
+    for i in range(len(l1)):
+      for j in range(i+1,len(l1)):
+        if len(l1[i]) >= len(l1[j]):
+          l1[i],l1[j] = l1[j],l1[i]
+    return len(l1[-1])
+    
+  find another answer and accepted:
+  
+from collections import deque
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        curr = deque()  #双向队列
+        longest=0
+        for i in s:
+            if i in curr:
+                while curr.popleft() !=i:pass   #从左边pop出去直到pop出去相同的元素为止
+            curr.append(i)
+            longest = max(longest,len(curr)) #始终拿最大的数，即是最后停留在队列之中没有重复字母的最大数
+        return longest
+        
